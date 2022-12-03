@@ -1,4 +1,4 @@
-from tkinter import Tk, Label, Canvas, Button
+from tkinter import Tk, Label, Canvas, Button, Frame
 import time as t
 
 SIZE = 16
@@ -75,18 +75,21 @@ class Interface:
         self.clear_frame()
         welcome = Label(text="Welcome to our Trash Classifier System",
                         font=(COLOR, SIZE))
-        welcome.pack()
+        welcome.grid(row=0, column=2)
         prompt = Label(text="Click on the Capture button to classify the trash", font=(COLOR, SIZE))
-        prompt.pack()
+        prompt.grid(row=1, column=2)
         camera_stream = Canvas(self.stream, width=500, height=350)
-        camera_stream.pack()
+        camera_stream.grid(row=2, column=2)
         camera_stream.create_rectangle(0, 20, 600, 600, fill="black")
         # this function is for playing a real-live stream
         self.rpi.make_stream()
-        capture_button = Button(text="Capture", command=self.call_classify_and_loading)
-        capture_button.pack(side="left", padx=130)
-        exit_button = Button(text="Exit", command=self.stream.destroy)
-        exit_button.pack(side="left")
+        # here where the two buttons "Capture" and "Exit" will be inside this frame to align with each other
+        f = Frame(self.stream)
+        f.grid(row=3, column=2)
+        capture_button = Button(f, text="Capture", command=self.call_classify_and_loading)
+        capture_button.pack(side="left")
+        exit_button = Button(f, text="Exit", command=self.stream.destroy)
+        exit_button.pack(side="right")
 
 
 # def classify():
