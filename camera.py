@@ -9,8 +9,12 @@ class Camera:
         self.camera.rotation=180
         self.temp_photo_path = 'temp.png'
         self.rpi = rpi
+        self.my_file = ""
     def take_photo(self):
         sleep(2)
         self.camera.capture(self.temp_photo_path)
         self.rpi.receive_photo(self.temp_photo_path)
         print("Done.")
+    def stream(self):
+        self.my_file = open("my_file","jpeg")
+        self.camera.start_preview()
