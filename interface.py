@@ -70,9 +70,12 @@ class Interface:
     # after the 'Capture' button has been clicked on. Also, it will call the display loading layout function
     # to display the loading layout
     def call_classify_and_loading(self):
-        # self.rpi.classify()
+        self.rpi.classify()
         self.display_loading_layout()
-
+    def exit(self):
+        self.rpi.stop_stream()
+		self.stream.destroy()
+     
     # this function is for displaying the first layout when you run the code.
     # It will display some text at the top, display the camera streaming in its required position,
     # and two buttons at the bottom one for capturing the photo and the other for stopping the program
@@ -97,7 +100,7 @@ class Interface:
         f.grid(row=3, column=2)
         capture_button = Button(f, text="Capture", command=self.call_classify_and_loading)
         capture_button.pack(side="left")
-        exit_button = Button(f, text="Exit", command=self.stream.destroy)
+        exit_button = Button(f, text="Exit", command=self.exit)
         exit_button.pack(side="right")
 
 
