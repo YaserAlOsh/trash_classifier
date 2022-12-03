@@ -13,8 +13,11 @@ class RaspberryPIManagement:
     def exit_app(self):
         quit()
 
-    def classify(self):
+      def classify(self):
+        self.camera.stop_preview()
+	    self.camera.myfile.close()
         self.camera.take_photo()
+        
     def receive_photo(self,img_path):
         self.interface.show_image(img_path)
 
