@@ -1,83 +1,64 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
 import numpy as np
-import tensorflow as tf
-from tensorflow import keras
+import PIL
+#import tensorflow as tf
+import tflite_runtime.interpreter as tflite # needs testing
+
+
+# In[2]:
 
 
 class Model():
 
-    def __init__(self, model_filepath):  # load the model from disk, must be a path to model dir
-
+    def __init__(self, rpi, model_filepath):
         self.model_filepath = model_filepath
         self._load_model_(self.model_filepath)
         self.predictions = None
-        self.train_ds = None
-        self.test_ds = None
-
-    def __str__(self):
-        self.model_checkpoint.summary()
-        return ""
-
+        self.rpi = rpi # needs testing
+        
+        
     def _load_model_(self, model_filepath):
         print("Loading model ...")
-        self.model_checkpoint = keras.models.load_model(filepath=model_filepath)
+        self.interpreter = tflite.Interpreter(model_path=model_filepath) #needs testing
+        self.interpreter.allocate_tensors()
+        self.intrp_input_details = self.interpreter.get_input_details()
+        self.intrp_output_details = self.interpreter.get_output_details()  
         print("Model loaded.")
 
-    def update_model(self, batch_size=16, epochs=10):  # to re-train the model, data must be loaded first
-        if self.train_ds is None:
-            print("No data has been loaded for training, consider using .load_data()")
-
-        else:
-            print("The model is updating")
-            self.model_checkpoint.fit(self.train_ds, batch_size=batch_size, epochs=epochs)
-            self.model_checkpoint.save(self.model_filepath)
-            print(f"The model has finished updating, model saved to {self.model_filepath}")
-
-    def test_model(self):  # to test the model, data must be loaded first
-        if self.test_ds is None:
-            print("No data has been loaded for testing, consider using .load_data()")
-        else:
-            self.model_checkpoint.evaluate(x_test, y_test)
-
-    def predict_img_arr(self, img_arr, enable_saving=False):  # presumes that the input array is (256, 256, 3)
-        if len(img_arr.shape) == 3:
-            img_arr = np.expand_dims(img_arr, axis=0)
-            preds = self.model_checkpoint.predict(img_arr)
-            return preds
-
-            if enable_saving:
-                self._postprocess_preds_(preds)
-        else:
-            print("Image array not in right format. Must be array with the following dimensions: (256, 256, 3)")
-
-    def predict_img_file(self, img_filepath, enable_saving=True, display_result=False):  # predict from an image file
-        img_name = img_filepath.split('\\')[-1]
-        print(f"Predicting the class of image: {img_name}..")
-
-        img = keras.utils.load_img(path=img_filepath)
+            
+    def predict_img_file(self, img_filepath, enable_saving=True, display_result=False):
+        img = PIL.Image.open(img_filepath)
+        img.load()
         img = img.resize(size=(256, 256))
-        img_arr = keras.utils.img_to_array(img)
-        preds = self.predict_img_arr(img_arr)
+        img_arr = np.array(img, dtype=np.float32)
+        img_arr = np.expand_dims(img_arr, axis=0)
+        assert img_arr.shape == (1, 256, 256, 3)
+        
+        self.interpreter.set_tensor(self.intrp_input_details[0]['index'], img_arr)
+        self.interpreter.invoke()
+        preds = self.interpreter.get_tensor(self.intrp_output_details[0]['index'])
 
         if enable_saving:
             self._postprocess_preds_(preds, display_result=display_result)
-
-    def load_data(self, train_dir=None,
-                  test_dir=None):  # loads from directories divided into more directories per class containing the images
-        if train_dir is not None:
-            self.train_ds = keras.utils.image_dataset_from_directory(directory=train_dir,
-                                                                     label_mode='categorical')
-        if test_dir is not None:
-            self.test_ds = keras.utils.image_dataset_from_directory(directory=test_dir,
-                                                                    label_mode='categorical')
-        print("loaded specified data successfully")
-
+        
+        
     def _postprocess_preds_(self, preds_arr, display_result=False):
         preds_arr = preds_arr[0]
-        label_map = {'Metal': preds_arr[0], 'Paper': preds_arr[1], 'Plastic': preds_arr[2]}
+        label_map = {'Metal':preds_arr[0], 'Paper':preds_arr[1], 'Plastic':preds_arr[2], 'General':False}
+        
+        if label_map['Metal'] <= 0.5 and label_map['Paper'] <= 0.5 and label_map['Plastic'] <= 0.5:
+            label_map['General'] = True
+            
         self.predictions = label_map
         if display_result:
-            print(
-                f"Metal: {self.predictions['Metal'] * 100}% \nPaper: {self.predictions['Paper'] * 100}% \nPlastic: {self.predictions['Plastic'] * 100}%\n")
-
-
+            print(f"Metal: {self.predictions['Metal']*100}% \nPaper: {self.predictions['Paper']*100}% \nPlastic: {self.predictions['Plastic']*100}%\nGeneral: {self.predictions['General']}\n")
+    
+    # needs testing
+    def send_imgs_and_preds(self):
+        self.rpi.receive_classification_data(self.predictions)
 

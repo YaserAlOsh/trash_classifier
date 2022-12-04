@@ -15,6 +15,11 @@ class Camera:
         self.camera.capture(self.temp_photo_path)
         self.rpi.receive_photo(self.temp_photo_path)
         print("Done.")
+
     def stream(self):
-        self.my_file = open("my_file","jpeg")
-        self.camera.start_preview()
+        self.my_file = open("my_file.jpg","wb")
+        self.camera.start_preview(fullscreen=False,window=(0,0,300,400))
+
+    def stop_stream(self):
+        self.camera.stop_preview()
+        self.my_file.close()
