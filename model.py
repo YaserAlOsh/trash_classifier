@@ -51,7 +51,7 @@ class Model():
         preds_arr = preds_arr[0]
         label_map = {'Metal':preds_arr[0], 'Paper':preds_arr[1], 'Plastic':preds_arr[2], 'General':False}
         
-        if label_map['Metal'] <= 0.5 and label_map['Paper'] <= 0.5 and label_map['Plastic'] <= 0.5:
+        if label_map['Metal'] <= 0.7 and label_map['Paper'] <= 0.7 and label_map['Plastic'] <= 0.7:
             label_map['General'] = True
             
         self.predictions = label_map
