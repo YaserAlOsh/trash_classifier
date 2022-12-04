@@ -16,6 +16,10 @@ class RaspberryPIManagement:
         
     def receive_photo(self,img_path):
         self.interface.show_image(img_path)
+        self.trigger_model(img_path)
+
+    def make_stream(self):
+        self.camera.stream()
 
     def classify(self):
         self.stop_stream()
@@ -28,9 +32,20 @@ class RaspberryPIManagement:
         self.model.predict_img_file(img_path)
 
     def receive_classification_data(self,dict):
+        if dict['general']:
+            self.leds.general_led()
+        else:
+            max_value = max(dict.values())  # maximum value
+            max_key = [k for k, v in dict.items() if v == max_value][0]  # getting all keys containing the `maximum`
+            if max_key == 'metal':
+                self.leds.metaL_led()
+            elif max_key == 'paper':
+                self.leds.paper_led()
+            else:
+                self.leds.plastic_led()
+
         self.interface.display_classification_results(dict)
 
 
 
 rpi_management = RaspberryPIManagement()
-    
