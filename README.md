@@ -1,4 +1,4 @@
-# trash_classifier
+# Trash Classifier on RaspberryPI  
 A component that can classify trash items into their category. Uses Python and runs on a raspberryPI system. 
 
 # Hardware Component parts
