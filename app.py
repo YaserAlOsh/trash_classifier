@@ -7,7 +7,7 @@ class RaspberryPIManagement:
         ## initialize objects
         self.camera = Camera(self)
         self.model = Model(self,model_filepath=r'./model/tf_lite_model.tflite')
-        self.interface = Interface(self, self.exit_app,self.classify)
+        self.interface = Interface(self, self.exit_app,self.trigger_camera)
     ## define auxiliary functions
     def exit_app(self):
         quit()
@@ -21,7 +21,7 @@ class RaspberryPIManagement:
     def make_stream(self):
         self.camera.stream()
 
-    def classify(self):
+    def trigger_camera(self):
         self.stop_stream()
         self.camera.take_photo()
 
@@ -32,14 +32,14 @@ class RaspberryPIManagement:
         self.model.predict_img_file(img_path)
 
     def receive_classification_data(self,dict):
-        if dict['general']:
+        if dict['General']:
             self.leds.general_led()
         else:
             max_value = max(dict.values())  # maximum value
             max_key = [k for k, v in dict.items() if v == max_value][0]  # getting all keys containing the `maximum`
-            if max_key == 'metal':
+            if max_key == 'Metal':
                 self.leds.metaL_led()
-            elif max_key == 'paper':
+            elif max_key == 'Paper':
                 self.leds.paper_led()
             else:
                 self.leds.plastic_led()
