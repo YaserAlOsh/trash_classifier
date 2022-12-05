@@ -14,38 +14,36 @@ class Interface:
         self.stream.attributes('-fullscreen', True)
         self.stream.title("Trash Classifier System")
         self.stream.minsize(width=300, height=400)
-        self.display_first_layout()
-        self.stream.mainloop()
         self.waiting = False
+
 
     # this function for displaying the loading page after the capture button has been clicked
     def display_loading_layout(self):
         self.clear_frame()
-        self.stream.update()
         self.waiting = True
         loading = Label(text="Classifying...", font=(COLOR, SIZE))
         loading.place(x=self.stream.winfo_width() * 0.45, y=self.stream.winfo_height() * 0.4)
 
         for i in range(16):
-            Label(self.stream, bg="#525252", width=2, height=1).place(x=(i + 23) * 23,
-                                                                      y=self.stream.winfo_height() * 0.45)
+            Label(self.stream, bg="#525252", width=2, height=1).place(x=(i + 15) * 15,
+                                                                      y=self.stream.winfo_height() * 0.5)
 
-#         self.stream.update()
+        self.stream.update()
         self.play_animation()
 
     # this function will play the animation of the bar in the loading layout
     def play_animation(self):
         i = 0
-        while (i < 1) or self.waiting:
+        while (i < 3) or self.waiting:
             for j in range(16):
                 # make block red:
-                Label(self.stream, bg="#FF2E2E", width=2, height=1).place(x=(j + 23) * 23,
-                                                                          y=self.stream.winfo_height() * 0.45)
+                Label(self.stream, bg="#FF2E2E", width=2, height=1).place(x=(j + 15) * 15,
+                                                                          y=self.stream.winfo_height() * 0.5)
                 t.sleep(0.06)
                 self.stream.update_idletasks()
                 # make block gray:
-                Label(self.stream, bg="#525252", width=2, height=1).place(x=(j + 23) * 23,
-                                                                          y=self.stream.winfo_height() * 0.45)
+                Label(self.stream, bg="#525252", width=2, height=1).place(x=(j + 15) * 15,
+                                                                          y=self.stream.winfo_height() * 0.5)
                 i += 1
 
         self.show_final_layout()
@@ -98,10 +96,10 @@ class Interface:
     # to display the loading layout
     def call_classify_and_loading(self):
         self.waiting = True
-        loading_thread = Thread(target=self.display_loading_layout, name="Loading")
+        loading_thread = Thread(target=self.rpi.trigger_camera, name="Loading")
         loading_thread.start()
         #self.stream.after(4000, self.create_temp_func,{'Metal': 0.99232, 'Plastic': 100.00, 'Paper': 0.23132, 'General': False})
-        self.rpi.trigger_camera()
+        self.display_loading_layout()
 
     def exit(self):
         self.rpi.stop_stream()
@@ -120,9 +118,9 @@ class Interface:
 
         self.stream.update()
         # the width of camera_steam should be
-        camera_stream = Canvas(self.stream, width=self.stream.winfo_width(), height=self.stream.winfo_height() * 0.9)
+        camera_stream = Canvas(self.stream, width=self.stream.winfo_width() * 0.8, height=self.stream.winfo_height() * 0.75)
         camera_stream.grid(row=2, column=2)
-        camera_stream.create_rectangle(0, 20, self.stream.winfo_width(), self.stream.winfo_height() * 0.9, fill="black")
+        # camera_stream.create_rectangle(0, 20,680,340, fill="black")
 
         # this function is for playing a real-live stream
         self.rpi.make_stream()
@@ -133,10 +131,7 @@ class Interface:
         capture_button.pack(side="left")
         exit_button = Button(f, text="Exit", command=self.exit)
         exit_button.pack(side="right")
+        print(self.stream.winfo_height(),self.stream.winfo_width())
+        self.stream.mainloop()
 
 
-# def classify():
-#     pass
-#
-#
-# interface = Interface(None, quit, classify)
