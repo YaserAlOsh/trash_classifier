@@ -64,18 +64,18 @@ class Interface:
 
     def display_results(self, category, percentage):
         category_displayed = Label(text=f"Item category is {category}", font=(COLOR, SIZE))
-        category_displayed.place(x=self.stream.winfo_width() * 0.37, y=self.stream.winfo_height() * 0.35)
+        category_displayed.place(x=self.stream.winfo_width() * 0.32, y=self.stream.winfo_height() * 0.35)
         percentage_displayed = Label(text=f"Percentage = {percentage}%", font=(COLOR, SIZE))
-        percentage_displayed.place(x=self.stream.winfo_width() * 0.37, y=self.stream.winfo_height() * 0.42)
+        percentage_displayed.place(x=self.stream.winfo_width() * 0.32, y=self.stream.winfo_height() * 0.42)
 
     def show_final_layout(self):
         self.clear_frame()
 
         if self.dict.get('General') == True:
             category_displayed = Label(text=f"Item category is General", font=(COLOR, SIZE))
-            category_displayed.place(x=self.stream.winfo_width() * 0.37, y=self.stream.winfo_height() * 0.35)
+            category_displayed.place(x=self.stream.winfo_width() * 0.32, y=self.stream.winfo_height() * 0.35)
             percentage_displayed = Label(text=f"This category can't be classified", font=(COLOR, SIZE))
-            percentage_displayed.place(x=self.stream.winfo_width() * 0.37, y=self.stream.winfo_height() * 0.42)
+            percentage_displayed.place(x=self.stream.winfo_width() * 0.32, y=self.stream.winfo_height() * 0.42)
 
         else:
             max_value = max(self.dict.values())
