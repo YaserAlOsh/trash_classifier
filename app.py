@@ -15,7 +15,6 @@ class RaspberryPIManagement:
 
         
     def receive_photo(self,img_path):
-        self.interface.show_image(img_path)
         self.trigger_model(img_path)
 
     def make_stream(self):
