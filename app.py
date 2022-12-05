@@ -8,14 +8,14 @@ class RaspberryPIManagement:
         ## initialize objects
         self.camera = Camera(self)
         self.leds = LEDs()
-        self.model = Model(self,model_filepath=r'./model/tf_lite_model.tflite')
-        self.interface = Interface(self, self.exit_app,self.trigger_camera)
+        self.model = Model(self, model_filepath=r'./model/tf_lite_model.tflite')
+        self.interface = Interface(self)
+        self.interface.display_first_layout()
+
     ## define auxiliary functions
     def exit_app(self):
         quit()
 
-
-        
     def receive_photo(self,img_path):
         self.trigger_model(img_path)
 
@@ -33,6 +33,8 @@ class RaspberryPIManagement:
         self.model.predict_img_file(img_path,display_result=True)
 
     def receive_classification_data(self,dict):
+        self.interface.display_classification_results(dict)
+        t.sleep(1)
         if dict['General']==True:
             self.leds.general_led()
         else:
@@ -43,9 +45,13 @@ class RaspberryPIManagement:
                 self.leds.paper_led()
             else:
                 self.leds.plastic_led()
-        self.interface.display_classification_results(dict)
+        print("__________________________")
+        print(self.interface)
+        print("__________________________")
+
 
 
 
 
 rpi_management = RaspberryPIManagement()
+
