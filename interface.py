@@ -8,9 +8,8 @@ COLOR = "white"
 
 class Interface:
 
-    def __init__(self, rpi, exit_screen, classifying):
+    def __init__(self, rpi):
         self.rpi = rpi
-        #self.classify_obj = classifying
         self.stream = Tk()
         self.stream.attributes('-fullscreen', True)
         self.stream.title("Trash Classifier System")
