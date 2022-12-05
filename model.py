@@ -42,9 +42,10 @@ class Model():
         self.interpreter.set_tensor(self.intrp_input_details[0]['index'], img_arr)
         self.interpreter.invoke()
         preds = self.interpreter.get_tensor(self.intrp_output_details[0]['index'])
-        self.send_imgs_and_preds()
+        
         if enable_saving:
             self._postprocess_preds_(preds, display_result=display_result)
+        self.send_imgs_and_preds()
         
         
     def _postprocess_preds_(self, preds_arr, display_result=False):
