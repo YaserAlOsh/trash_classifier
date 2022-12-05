@@ -81,11 +81,11 @@ class Interface:
             max_value = max(self.dict.values())
 
             if self.dict.get('Plastic') == max_value:
-                self.display_results('Plastic', "{.5f}".format(max_value))
+                self.display_results('Plastic', "%.5f" % max_value)
             elif self.dict.get('Metal') == max_value:
-                self.display_results('Metal', "{.5f}".format(max_value))
+                self.display_results('Metal', "%.5f" % max_value)
             elif self.dict.get('Paper') == max_value:
-                self.display_results('Paper', "{.5f}".format(max_value))
+                self.display_results('Paper', "%.5f" % max_value)
 
         # buttons
         retaking_button = Button(text="Retake Photo", command=self.display_first_layout)
