@@ -43,7 +43,7 @@ class RaspberryPIManagement:
                 self.leds.paper_led()
             else:
                 self.leds.plastic_led()
-        self.interface.display_classification_results(self,dict)
+        self.interface.display_classification_results(dict)
 
 
 
