@@ -35,7 +35,7 @@ class Interface:
     # this function will play the animation of the bar in the loading layout
     def play_animation(self):
         i = 0
-        while (i < 3) or self.waiting:
+        while (i < 1) or self.waiting:
             for j in range(16):
                 # make block red:
                 Label(self.stream, bg="#FF2E2E", width=2, height=1).place(x=(j + 23) * 23,
