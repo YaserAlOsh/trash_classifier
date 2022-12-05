@@ -64,18 +64,18 @@ class Interface:
 
     def display_results(self, category, percentage):
         category_displayed = Label(text=f"Item category is {category}", font=(COLOR, SIZE))
-        category_displayed.place(x=self.stream.winfo_width() * 0.44, y=self.stream.winfo_height() * 0.35)
+        category_displayed.place(x=self.stream.winfo_width() * 0.40, y=self.stream.winfo_height() * 0.35)
         percentage_displayed = Label(text=f"Percentage = {percentage}%", font=(COLOR, SIZE))
-        percentage_displayed.place(x=self.stream.winfo_width() * 0.44, y=self.stream.winfo_height() * 0.4)
+        percentage_displayed.place(x=self.stream.winfo_width() * 0.40, y=self.stream.winfo_height() * 0.42)
 
     def show_final_layout(self):
         self.clear_frame()
 
         if self.dict.get('General') == True:
             category_displayed = Label(text=f"Item category is General", font=(COLOR, SIZE))
-            category_displayed.place(x=self.stream.winfo_width() * 0.44, y=self.stream.winfo_height() * 0.35)
+            category_displayed.place(x=self.stream.winfo_width() * 0.40, y=self.stream.winfo_height() * 0.35)
             percentage_displayed = Label(text=f"This category can't be classified", font=(COLOR, SIZE))
-            percentage_displayed.place(x=self.stream.winfo_width() * 0.44, y=self.stream.winfo_height() * 0.4)
+            percentage_displayed.place(x=self.stream.winfo_width() * 0.40, y=self.stream.winfo_height() * 0.42)
 
         else:
             max_value = max(self.dict.values())
@@ -89,9 +89,9 @@ class Interface:
 
         # buttons
         retaking_button = Button(text="Retake Photo", command=self.display_first_layout)
-        retaking_button.place(x=self.stream.winfo_width() * 0.42, y=self.stream.winfo_height() * 0.45)
+        retaking_button.place(x=self.stream.winfo_width() * 0.35, y=self.stream.winfo_height() * 0.5)
         exit_button = Button(text="Exit", command=self.stream.destroy)
-        exit_button.place(x=self.stream.winfo_width() * 0.53, y=self.stream.winfo_height() * 0.45)
+        exit_button.place(x=self.stream.winfo_width() * 0.50, y=self.stream.winfo_height() * 0.5)
 
     # this function will call the classify function in the rpi class, which will stop the camera from streaming
     # after the 'Capture' button has been clicked on. Also, it will call the display loading layout function
