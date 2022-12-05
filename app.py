@@ -1,13 +1,15 @@
 from interface import Interface
 from camera import Camera
 from model import Model
+from hardware import LEDs
 import time as t
 class RaspberryPIManagement:
     def __init__(self):
         ## initialize objects
         self.camera = Camera(self)
+        self.leds = LEDs()
         self.model = Model(self,model_filepath=r'./model/tf_lite_model.tflite')
-        self.interface = Interface(self)
+        self.interface = Interface(self, self.exit_app,self.trigger_camera)
     ## define auxiliary functions
     def exit_app(self):
         quit()
@@ -28,10 +30,10 @@ class RaspberryPIManagement:
         self.camera.stop_stream()
 
     def trigger_model(self,img_path):
-        self.model.predict_img_file(img_path)
+        self.model.predict_img_file(img_path,display_result=True)
 
     def receive_classification_data(self,dict):
-        if dict['General'] == True:
+        if dict['General']==True:
             self.leds.general_led()
         else:
             max_value = max(dict.values())  # maximum value
@@ -41,8 +43,8 @@ class RaspberryPIManagement:
                 self.leds.paper_led()
             else:
                 self.leds.plastic_led()
+        self.interface.display_classification_results(self,dict)
 
-        self.interface.display_classification_results(dict)
 
 
 
