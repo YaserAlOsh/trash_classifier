@@ -36,10 +36,9 @@ class RaspberryPIManagement:
             self.leds.general_led()
         else:
             max_value = max(dict.values())  # maximum value
-            max_key = [k for k, v in dict.items() if v == max_value][0]  # getting all keys containing the `maximum`
-            if max_key == 'Metal':
+            if dict['Metal'] == max_value:
                 self.leds.metaL_led()
-            elif max_key == 'Paper':
+            elif dict['Paper'] == max_value:
                 self.leds.paper_led()
             else:
                 self.leds.plastic_led()
