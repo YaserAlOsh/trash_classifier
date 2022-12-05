@@ -21,6 +21,7 @@ class Interface:
     # this function for displaying the loading page after the capture button has been clicked
     def display_loading_layout(self):
         self.clear_frame()
+        self.stream.update()
         self.waiting = True
         loading = Label(text="Classifying...", font=(COLOR, SIZE))
         loading.place(x=self.stream.winfo_width() * 0.45, y=self.stream.winfo_height() * 0.4)
@@ -29,7 +30,7 @@ class Interface:
             Label(self.stream, bg="#525252", width=2, height=1).place(x=(i + 23) * 23,
                                                                       y=self.stream.winfo_height() * 0.45)
 
-        self.stream.update()
+#         self.stream.update()
         self.play_animation()
 
     # this function will play the animation of the bar in the loading layout
