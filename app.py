@@ -7,7 +7,7 @@ class RaspberryPIManagement:
         ## initialize objects
         self.camera = Camera(self)
         self.model = Model(self,model_filepath=r'./model/tf_lite_model.tflite')
-        self.interface = Interface(self, self.exit_app,self.trigger_camera)
+        self.interface = Interface(self)
     ## define auxiliary functions
     def exit_app(self):
         quit()
