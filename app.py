@@ -31,7 +31,7 @@ class RaspberryPIManagement:
         self.model.predict_img_file(img_path)
 
     def receive_classification_data(self,dict):
-        if dict['General']:
+        if dict['General'] == True:
             self.leds.general_led()
         else:
             max_value = max(dict.values())  # maximum value
