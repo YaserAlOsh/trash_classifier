@@ -48,7 +48,11 @@ The model can classify the images into one of 3 classes `plastic`, `paper`, and 
 Anything other than that with an accuracy less than 70% is classified as general.
 
 ### Model class
-Class constructor -> `Model(file_path)` takes the file path of the model and load it.
+`Model(file_path)` Constructor that takes the file path of the model and load it.
+`load_model_(model_filepath)` takes the file path of the model and load it.
+`predict_img_file(img_filepath, enable_saving = True, display_result = False)` takes the file path of the image, perform postprocessing, predict the class, and print the predictions.
+`postprocess_preds_(preds, display_result=display_result)` print the list of predictions
+`send_imgs_and_preds()` send the prediction results to the Raspberry Pi.
 
 
 
