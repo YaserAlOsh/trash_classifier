@@ -23,7 +23,10 @@ Initializes the interface, the model, the camera, the hardware parts.
 Allows all classes to interact together.  
 
 ## camera.py
+The camera has multiple functionalities including starting a preview, stopping the preview, taking a photo
 
+## hardware.py 
+This module is responsible for the 4 leds, blue for general , red for metal, yellow for paper, green for plastic
 
 ## interface.py
 
