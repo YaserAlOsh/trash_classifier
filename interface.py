@@ -118,10 +118,8 @@ class Interface:
         prompt.grid(row=1, column=2)
 
         self.stream.update()
-        # the width of camera_steam should be
         camera_stream = Canvas(self.stream, width=self.stream.winfo_width() * 0.8, height=self.stream.winfo_height() * 0.75)
         camera_stream.grid(row=2, column=2)
-        # camera_stream.create_rectangle(0, 20,680,340, fill="black")
 
         # this function is for playing a real-live stream
         if self.rpi != None:
