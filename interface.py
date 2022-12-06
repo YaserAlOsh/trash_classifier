@@ -99,7 +99,6 @@ class Interface:
             self.waiting = True
             loading_thread = Thread(target=self.rpi.trigger_camera, name="Loading")
             loading_thread.start()
-        #self.stream.after(4000, self.create_temp_func,{'Metal': 0.99232, 'Plastic': 100.00, 'Paper': 0.23132, 'General': False})
         self.display_loading_layout()
 
     def exit(self):
@@ -114,11 +113,9 @@ class Interface:
         self.clear_frame()
         welcome = Label(text="Welcome to our Trash Classifier System",
                         font=(COLOR, SIZE))
-#         welcome.place(x=640/3, y=20)
-        welcome.grid(row=0, column=3)
+        welcome.grid(row=0, column=2)
         prompt = Label(text="Click on the Capture button to classify the trash", font=(COLOR, SIZE))
-#         prompt.place(x=640/3, y=30)
-        prompt.grid(row=1, column=3)
+        prompt.grid(row=1, column=2)
 
         self.stream.update()
         # the width of camera_steam should be
