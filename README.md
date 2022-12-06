@@ -29,6 +29,27 @@ Allows all classes to interact together.
 
 ## model.py
 
+### Model Training
+
+The model is trained on several public datasets of trash from Kaggle including:
+1. https://www.kaggle.com/datasets/naidusurajvardhan/recycling-waste
+2. https://www.kaggle.com/datasets/sapal6/waste-classification-data-v2
+3. https://www.kaggle.com/datasets/imrshu/solidwaste
+4. https://www.kaggle.com/datasets/hseyinsaidkoca/recyclable-solid-waste-dataset-on-5-background-co
+
+
+Our dataset consist of images in 6691 total divided into:
+4685 for training 
+959  for testing
+1047 for validation
+
+For the model we used `VVG19` as a backbone for our classification
+The model can classify the images into one of 3 classes `plastic`, `paper`, and `metal`. 
+Anything other than that with an accuracy less than 70% is classified as general.
+
+### Model class
+Class constructor -> `Model(file_path)` takes the file path of the model and load it.
+
 
 
 ### Requirements:
