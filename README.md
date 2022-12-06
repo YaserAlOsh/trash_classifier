@@ -74,9 +74,9 @@ Anything other than that with an accuracy less than **70%** is classified as gen
 
 `numpy` version 1.23.5 or above
 
-`Pillow ` 9.3.0 or above
+`Pillow ` version 9.3.0 or above
 
-`Python` 3.9.2 or above
+`Python` version 3.9.2 or above
 
 
 
