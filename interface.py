@@ -112,9 +112,11 @@ class Interface:
         self.clear_frame()
         welcome = Label(text="Welcome to our Trash Classifier System",
                         font=(COLOR, SIZE))
-        welcome.grid(row=0, column=2)
+#         welcome.place(x=640/3, y=20)
+        welcome.grid(row=0, column=3)
         prompt = Label(text="Click on the Capture button to classify the trash", font=(COLOR, SIZE))
-        prompt.grid(row=1, column=2)
+#         prompt.place(x=640/3, y=30)
+        prompt.grid(row=1, column=3)
 
         self.stream.update()
         # the width of camera_steam should be
@@ -126,7 +128,7 @@ class Interface:
         self.rpi.make_stream()
         # here where the two buttons "Capture" and "Exit" will be inside this frame to align with each other
         f = Frame(self.stream)
-        f.grid(row=3, column=2)
+        f.grid(row=3, column=3)
         capture_button = Button(f, text="Capture", command=self.call_classify_and_loading)
         capture_button.pack(side="left")
         exit_button = Button(f, text="Exit", command=self.exit)
