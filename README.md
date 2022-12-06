@@ -56,7 +56,7 @@ Our dataset consist of images in 6691 total divided into:
 
 For the model we used `VVG19` as a backbone for our classification
 The model can classify the images into one of 3 classes `plastic`, `paper`, and `metal`. 
-Anything other than that with an accuracy less than 70% is classified as general.
+Anything other than that with an accuracy less than **70%** is classified as general.
 
 ### Model class
 `Model(file_path)` Constructor that takes the file path of the model and load it.
@@ -68,6 +68,15 @@ Anything other than that with an accuracy less than 70% is classified as general
 `postprocess_preds_(preds, display_result=display_result)` print the list of predictions
 
 `send_imgs_and_preds()` send the prediction results to the Raspberry Pi.
+
+### Requirements of model class:
+`TFLite` version 2.10.0 or above
+
+`numpy` version 1.23.5 or above
+
+`Pillow ` 9.3.0 or above
+
+`Python` 3.9.2 or above
 
 
 
