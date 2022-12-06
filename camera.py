@@ -2,16 +2,15 @@
 from time import sleep
 
 class Camera:
-    temp_photo_path = 'temp.png'
+    temp_photo_path = 'temp.jpg'
     camera = None
     def __init__(self,rpi):
         #self.camera = PiCamera()
         self.camera.rotation=180
-        self.temp_photo_path = 'temp.png'
+        self.temp_photo_path = 'temp.jpg'
         self.rpi = rpi
         self.my_file = ""
     def take_photo(self):
-        sleep(2)
         self.camera.capture(self.temp_photo_path)
         if self.rpi != None:
             self.rpi.receive_photo(self.temp_photo_path)
@@ -19,7 +18,9 @@ class Camera:
 
     def stream(self):
         self.my_file = open("my_file.jpg","wb")
-        self.camera.start_preview(fullscreen=False,window=(0,0,300,400))
+        self.camera.start_preview(fullscreen=False,window=(-80,80,680,340))
+
+        # width = self.stream.winfo_width() * 0.8, height = self.stream.winfo_height() * 0.75
 
     def stop_stream(self):
         self.camera.stop_preview()
