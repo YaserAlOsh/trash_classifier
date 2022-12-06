@@ -69,7 +69,7 @@ Anything other than that with an accuracy less than 70% is classified as general
 
 
 ### Requirements:
-- guizero
+- tkinter
 - rpi.gpio
 - picamera
 - tflite
